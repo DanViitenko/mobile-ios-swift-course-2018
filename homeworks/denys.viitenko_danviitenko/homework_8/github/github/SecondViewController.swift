@@ -22,6 +22,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = false
         updateTable()
         tableView.delegate = self
         tableView.dataSource = self
@@ -45,8 +46,8 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func updateTable(){
         let queue = DispatchQueue.global(qos: .userInteractive)
         queue.sync {
-        let url = URL(string: "https://api.github.com/users/\(username)/repos") as! URL
-        let request = NSMutableURLRequest(url: url)
+        let url = URL(string: "https://api.github.com/users/\(username)/repos")
+        let request = NSMutableURLRequest(url: url!)
         URLSession.shared.dataTask(with: request as URLRequest){ (data, response, error) in
             if error != nil{
                 print(error!.localizedDescription)
@@ -54,7 +55,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             do{
                 let json = try JSONDecoder().decode([Repo].self, from: data!)
-                json.map({(repo) -> Void in
+                json.forEach({(repo) -> Void in
                     DispatchQueue.main.async {
                         self.repo.append(repo)
                         self.tableView.reloadData()
@@ -81,9 +82,8 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func updateLabels(){
         fullnameLabel.text = user?.name
         usernameLabel.text = user?.login
-        likeLabel.text = String(user!.followers)
-        folderLabel.text = String(user!.public_repos)
+        likeLabel.text = String(user!.followers) 
+        folderLabel.text = String(user!.public_repos) 
     }
-
 }
 
