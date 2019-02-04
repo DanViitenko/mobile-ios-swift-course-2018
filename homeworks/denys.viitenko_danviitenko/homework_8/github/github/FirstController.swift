@@ -89,6 +89,7 @@ class FirstController: UIViewController {
             if segue.identifier == "showSecondVC", let secondViewController = segue.destination as? SecondViewController {
                 if repo != nil{
                 secondViewController.user = repo
+                secondViewController.username = username
         }
     }
 }

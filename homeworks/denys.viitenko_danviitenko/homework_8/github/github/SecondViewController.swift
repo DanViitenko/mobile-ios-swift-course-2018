@@ -9,7 +9,7 @@
 import UIKit
 
 class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var username = "MastersAcademy"
+    var username = ""
     var repo = [Repo]()
     var user: UserRepo?
     @IBOutlet weak var userImageView: UIImageView!
